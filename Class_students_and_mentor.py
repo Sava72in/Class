@@ -6,9 +6,19 @@ class Student:
         self.finished_courses = []
         self.courses_in_progress = []
         self.grades = {}
+        
     
     def average(self):
         return [sum(self.grades[f'{i}']) for i in self.grades][0] / [len(self.grades[f'{i}']) for i in self.grades][0]
+
+    def rate_hw(self, lecturer, course, grade):
+        if isinstance(lecturer, Lecturer) and course in self.courses_in_progress:
+            if course in lecturer.grades:
+                lecturer.grades[course] += [grade]
+            else:
+                lecturer.grades[course] = [grade]
+        else:
+            return 'Ошибка'
 
     def __str__(self) -> str:
         return (f'Имя: {self.name} \
@@ -45,15 +55,6 @@ class Lecturer(Mentor):
     
     def average(self):
         return [sum(self.grades[f'{i}']) for i in self.grades][0] / [len(self.grades[f'{i}']) for i in self.grades][0]
-
-    def rate_hw(self, student, course, grade):
-        if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
-            if course in self.grades:
-                self.grades[course] += [grade]
-            else:
-                self.grades[course] = [grade]
-        else:
-            return 'Ошибка'
 
     def __str__(self):
         return f'Имя: {self.name} \nФамилия: {self.surname} \nСредняя оценка за лекцию: {self.average()}'
@@ -100,15 +101,15 @@ cool_mentor_1.rate_hw(best_student_3, 'Python', 7)
 
 Lecturer_1 = Lecturer("Trus", "Ubegai")
 Lecturer_1.courses_attached += ['Python']
-Lecturer_1.rate_hw(best_student_1, 'Python', 3)
-Lecturer_1.rate_hw(best_student_1, 'Python', 6)
-Lecturer_1.rate_hw(best_student_1, 'Python', 6)
+best_student_1.rate_hw(Lecturer_1, 'Python', 3)
+best_student_1.rate_hw(Lecturer_1, 'Python', 6)
+best_student_1.rate_hw(Lecturer_1, 'Python', 6)
 
 Lecturer_2 = Lecturer("Fred", "Dib")
 Lecturer_2.courses_attached += ['JS']
-Lecturer_2.rate_hw(best_student_2, 'JS', 9)
-Lecturer_2.rate_hw(best_student_2, 'JS', 8)
-Lecturer_2.rate_hw(best_student_2, 'JS', 9)
+best_student_2.rate_hw(Lecturer_2, 'JS', 9)
+best_student_2.rate_hw(Lecturer_2, 'JS', 8)
+best_student_2.rate_hw(Lecturer_2, 'JS', 9)
 
 Reviewer_1 = Reviewer("Brus", "Vsemog")
 
