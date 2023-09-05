@@ -69,8 +69,7 @@ class Reviewer(Mentor):
         super().__init__(name,surname)
 
     def __str__(self) -> str:
-        res = (f'Имя: {self.name} \nФамилия: {self.surname}')
-        return res
+        return f'Имя: {self.name} \nФамилия: {self.surname}'
  
 best_student_1 = Student('Ruoy', 'Eman', 'your_gender')
 best_student_1.courses_in_progress += ['Python']
