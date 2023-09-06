@@ -116,8 +116,6 @@ best_student_2.rate_hw(Lecturer_2, 'JS', 9)
 
 Reviewer_1 = Reviewer("Brus", "Vsemog")
 
-Summary_Lecturer = [Lecturer_1, Lecturer_2]
-
 Summary_Course = ['JS']
 
 print(best_student_1)
