@@ -1,4 +1,5 @@
 class Student:
+    Summary_Students = []
     def __init__(self, name, surname, gender):
         self.name = name
         self.surname = surname
@@ -6,8 +7,8 @@ class Student:
         self.finished_courses = []
         self.courses_in_progress = []
         self.grades = {}
+        Student.Summary_Students.append(self)
         
-    
     def average(self):
         return [sum(self.grades[f'{i}']) for i in self.grades][0] / [len(self.grades[f'{i}']) for i in self.grades][0]
 
@@ -49,9 +50,11 @@ class Mentor:
             return 'Ошибка'
 
 class Lecturer(Mentor):
+    Summary_Lecturer = []
     def __init__(self,name, surname):
         super().__init__(name,surname)
         self.grades = {}
+        Lecturer.Summary_Lecturer.append(self)
     
     def average(self):
         return [sum(self.grades[f'{i}']) for i in self.grades][0] / [len(self.grades[f'{i}']) for i in self.grades][0]
@@ -113,7 +116,6 @@ best_student_2.rate_hw(Lecturer_2, 'JS', 9)
 
 Reviewer_1 = Reviewer("Brus", "Vsemog")
 
-Summary_Students = [best_student_1, best_student_2, best_student_3]
 Summary_Lecturer = [Lecturer_1, Lecturer_2]
 
 Summary_Course = ['JS']
@@ -124,20 +126,22 @@ print(Lecturer_1 < best_student_1)
 print(best_student_2)
 print(Reviewer_1)
 
-def average_students(Summary_Students,Summary_Course):
+def average_students(students : list,Summary_Course):
     sum_ = 0
-    for st in Summary_Students:
+    for st in Student.Summary_Students:
         if st.courses_in_progress == Summary_Course:
             sum_ += st.average()
     return sum_
 
-print(f'Средняя ценка {average_students(Summary_Students,Summary_Course)} за домашние задания по всем студентам в рамках конкретного курса {Summary_Course}')
+print(f'Средняя ценка {average_students(Student.Summary_Students,Summary_Course)} за домашние задания по всем студентам в рамках конкретного курса {Summary_Course}')
 
-def average_lecturer(Summary_Lecturer,Summary_Course):
+def average_lecturer(lecturers : list,Summary_Course):
     sum_ = 0
-    for lec in Summary_Lecturer:
+    for lec in Lecturer.Summary_Lecturer:
         if lec.courses_attached == Summary_Course:
             sum_ += lec.average()
     return sum_
 
-print(f'Средняя ценка {average_lecturer(Summary_Lecturer,Summary_Course)} за лекции всех лекторов в рамках курса {Summary_Course}')
+print(f'Средняя ценка {average_lecturer(Lecturer.Summary_Lecturer,Summary_Course)} за лекции всех лекторов в рамках курса {Summary_Course}')
+
+
